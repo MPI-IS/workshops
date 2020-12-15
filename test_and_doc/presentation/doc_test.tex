@@ -1,0 +1,168 @@
+%% Aspect ratio 16:10, delete for 4:3
+\documentclass[compress,english,aspectratio=1610]{beamer}
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{ulem}
+%\usepackage{pgfplots}
+%\usepackage{relsize}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+%\pgfplotsset{compat=1.5, width=13cm, height=7cm}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par} % no "Figure X in captions"
+\setbeamercovered{transparent}
+
+    \expandafter\def\expandafter\insertshorttitle\expandafter{%
+      \insertshorttitle\hfill%
+      \insertframenumber\,/\,\inserttotalframenumber}
+
+%% Evenly spread items
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\fill}\olditem}
+
+%% MPG green (Pantone 328)
+\definecolor{mpg-green}{cmyk}{1,0,0.57,0.3}
+\definecolor{mpg-gray}{cmyk}{0,0,0.06,0.23}
+
+%% Symbols for footnotes
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\Cpp}{C\texttt{++}}
+
+\mode<presentation>
+ {
+  \usetheme{Ilmenau}
+  %% Beamer color theme
+  \usecolortheme[cmyk={1,0,0.57,0.3}]{structure}
+  %% use MPG green also for alerted text
+  \setbeamercolor{alerted text}{fg=mpg-green}
+  \setbeamercolor{itemize item}{fg=mpg-gray}
+  \beamertemplatenavigationsymbolsempty
+  %\setbeamertemplate{footline}[frame number]
+}
+
+    \setbeamerfont{section title}{parent=title}
+    \setbeamercolor{section title}{parent=titlelike}
+    \defbeamertemplate{section page}{mine}[1][] {%
+      \centering
+        \begin{beamercolorbox}[sep=8pt,center,#1]{section title}
+          \usebeamerfont{section title}\insertsection\par
+        \end{beamercolorbox}
+    }
+%    \newcommand*{\mysectionpage}{\usebeamertemplate*{section page}}
+
+\setbeamertemplate{section page}[mine]
+
+\AtBeginSection[]{\subsection{}\frame{\sectionpage}}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+\hypersetup{
+  colorlinks,
+  allcolors=.,
+  urlcolor=blue,
+}
+%\usepackage{tikz}
+
+%\newcommand{\bluecheck}{}%
+%\DeclareRobustCommand{\greencheck}{%
+%  \tikz\fill[scale=0.4, color=mpg-green]
+%  (0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;%
+%}
+
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{{\color{mpg-green}\ding{51}}}%
+\newcommand{\xmark}{{\color{red}\ding{55}}}%
+
+\setbeamercovered{invisible}
+
+
+\title{How to test and document your Python code}
+\author{ZWE Software Workshop}
+\institute{Max-Planck-Institut f\"ur Intelligente Systeme}
+\date{\small{Python Introductory Workshop, Stuttgart, December 14, 2020}}
+\titlegraphic{\includegraphics[height=1.5cm]{figures/minerva}}
+\begin{document}
+%% Title frame
+\begin{frame}[plain,label=thetitle]
+ \titlepage
+\end{frame}
+
+%\logo{\includegraphics[height=1cm]{figures/minerva}}
+
+
+%% Table of Contents
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{Testing your code}
+\begin{frame}{Why?}
+    \begin{itemize}
+        \item Write better code
+        \item Save time
+        \item Not look like an idiot
+        \item It is fun! :)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How?}
+    The standard framework for testing Python code is
+    \href{https://docs.python.org/3/library/unittest.html}{unittest}.
+    \begin{itemize}
+        \item Create {\tt tests} packages
+        \item Create modules that contains the tests with appropriate names
+        \item Run for example: \newline
+        {\tt \$ python -m unittest} \newline
+        {\tt \$ python -m unittest test\_module1 test\_module2} \newline
+        {\tt \$ python -m unittest test\_module.TestClass} \newline
+        {\tt \$ python -m unittest test\_module.TestClass.test\_method} \newline
+    \end{itemize}
+
+    Alternative: \href{https://docs.pytest.org/en/stable/}{pytest}
+\end{frame}
+
+\section{Documentation your code}
+\begin{frame}{Why?}
+    \begin{itemize}
+        \item Code usability
+        \item Knowledge transfer
+        \item Manage expectations
+        \item It is fun! :)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How?}
+	The standard framework for writing documentation for Python code is
+    \href{https://www.sphinx-doc.org/en/master/}{Sphinx}.
+    \begin{itemize}
+        \item Create {\tt doc} folder
+        \item Install sphinx with pip: \newline
+        {\tt \$ pip install sphinx} \newline
+        {\tt \$ pip install sphinx\_bootstrap\_theme} \newline
+
+        \item Run: \newline
+        {\tt \$ sphinx-quickstart} \newline
+        {\tt \$ make html} \newline
+        or \newline
+        {\tt \$ sphinx-build -b html source\_dir build\_dir} \newline
+    \end{itemize}
+    Alternative: \href{https://www.doxygen.nl/index.html}{Doxygen}
+\end{frame}
+
+
+
+\end{document}
